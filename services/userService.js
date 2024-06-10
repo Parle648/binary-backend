@@ -24,6 +24,27 @@ class UserService {
 
     return user ? true : null;
   }
+
+  getAll() {
+    const users = userRepository.getAll();
+    return users ? users : null
+  }
+
+  getSpecific(id) {
+    const user = userRepository.getOne({id});
+
+    return user ? user : null;
+  }
+
+  update(id, userDto) {
+    const updatedUser = userRepository.update(id, userDto);
+    return updatedUser ? updatedUser : null;
+  }
+
+  delete(id) {
+    const deletedUser = userRepository.delete(id);
+    return deletedUser ? deletedUser : null;
+  }
 }
 
 const userService = new UserService();

@@ -32,4 +32,111 @@ router.post('/', createUserValid, (req, res, next) => {
   }
 }, responseMiddleware)
 
+router.get('/', (req, res, next) => {
+  try {
+    const users = userService.getAll();
+    if (users) {
+      res.data = {
+        status: 200,
+        data: users
+      }
+    }
+  } catch (error) {
+    res.data = {
+      status: 500,
+      message: 'Cannot get users',
+      error: true
+    }
+  }
+  finally {
+    next()
+  }
+
+}, responseMiddleware)
+
+router.get('/:id', (req, res, next) => {
+  try {
+    const user = userService.getSpecific(req.params.id);
+
+    if (user) {
+      res.data = {
+        status: 200,
+        data: user
+      }
+    } else {
+      res.data = {
+        status: 404,
+        message: 'user does not exist',
+        error: true
+      }
+    }
+  } catch (error) {
+    res.data = {
+      status: 500,
+      message: 'Cannot get user',
+      error: true
+    }
+  }
+  finally {
+    next()
+  }
+
+}, responseMiddleware)
+
+router.patch('/:id', (req, res, next) => {
+  try {
+    const user = userService.getSpecific(req.params.id);
+    const changedUser = user ? userService.update(req.params.id, req.body) : null;
+
+    if (changedUser) {
+      res.data = {
+        status: 200,
+        data: changedUser,
+      }
+    } else {
+      res.data = {
+        status: 400,
+        message: `user with id: ${req.params.id} does not exist`,
+        error: true
+      }
+    }
+  } catch (error) {
+    res.data = {
+      status: 500,
+      message: `server error`,
+      error: true
+    }
+  } finally {
+    next();
+  };
+}, responseMiddleware)
+
+router.delete('/:id', (req, res, next) => {
+  try {
+    const user = userService.getSpecific(req.params.id);
+    const deletedUser = user ? userService.delete(req.params.id) : null;
+
+    if (deletedUser) {
+      res.data = {
+        status: 200,
+        data: deletedUser,
+      }
+    } else {
+      res.data = {
+        status: 400,
+        message: `user with id: ${req.params.id} does not exist`,
+        error: true
+      }
+    }
+  } catch (error) {
+    res.data = {
+      status: 500,
+      message: `server error`,
+      error: true
+    }
+  } finally {
+    next();
+  };
+}, responseMiddleware)
+
 export { router };
