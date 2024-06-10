@@ -5,7 +5,8 @@ const createUserValid = (req, res, next) => {
   // TODO: Implement validatior for USER entity during creation
   try {
     const {email, password, phoneNumber} = req.body;
-    const isExist = userService.search({email: email, password: password});
+    const isEmail = userService.search({email: email});
+    const isPhoneNumber = userService.search({phoneNumber: phoneNumber});
     let error = false;
     const phoneNumberRegex = /^\+380\d{9}$/;
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
@@ -15,9 +16,14 @@ const createUserValid = (req, res, next) => {
       res.status(400).json({status: 400, message: 'all fields are require', error})
     }
     
-    if (isExist) {
+    if (isEmail) {
       error = true;
-      res.status(400).json({status: 400, message: 'this email have already used', error})
+      res.status(400).json({status: 400, message: 'this email isn\'t available', error})
+    };
+
+    if (isPhoneNumber) {
+      error = true;
+      res.status(400).json({status: 400, message: 'this phone number isn\'t available', error})
     };
 
     if (!gmailRegex.test(email)) {
