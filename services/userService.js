@@ -40,6 +40,11 @@ class UserService {
     const updatedUser = userRepository.update(id, userDto);
     return updatedUser ? updatedUser : null;
   }
+
+  delete(id) {
+    const deletedUser = userRepository.delete(id);
+    return deletedUser ? deletedUser : null;
+  }
 }
 
 const userService = new UserService();
