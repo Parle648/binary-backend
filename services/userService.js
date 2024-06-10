@@ -18,6 +18,12 @@ class UserService {
     }
     return item;
   }
+
+  create(userDto) {
+    const user = userRepository.create(userDto);
+
+    return user ? true : null;
+  }
 }
 
 const userService = new UserService();

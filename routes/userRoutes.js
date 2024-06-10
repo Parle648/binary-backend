@@ -10,7 +10,26 @@ const router = Router();
 
 // TODO: Implement route controllers for user
 router.post('/', createUserValid, (req, res, next) => {
-  console.log('data is valid');
-})
+  try {
+    const user = userService.create(req.body);
+
+    if (user) {
+      console.log('user created');
+      res.data = {
+        status: 200,
+        data: true
+      }
+    }
+  } catch (error) {
+    res.data = {
+      status: 400,
+      message: 'user isn\'t created',
+      error: true,
+    }
+  }
+  finally {
+    next()
+  }
+}, responseMiddleware)
 
 export { router };
