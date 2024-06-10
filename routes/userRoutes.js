@@ -32,4 +32,26 @@ router.post('/', createUserValid, (req, res, next) => {
   }
 }, responseMiddleware)
 
+router.get('/', (req, res, next) => {
+  try {
+    const users = userService.getAll();
+    if (users) {
+      res.data = {
+        status: 200,
+        data: users
+      }
+    }
+  } catch (error) {
+    res.data = {
+      status: 400,
+      message: 'Cannot get users',
+      error: true
+    }
+  }
+  finally {
+    next()
+  }
+
+}, responseMiddleware)
+
 export { router };

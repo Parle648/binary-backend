@@ -24,6 +24,11 @@ class UserService {
 
     return user ? true : null;
   }
+
+  getAll() {
+    const users = userRepository.getAll();
+    return users ? users : null
+  }
 }
 
 const userService = new UserService();
