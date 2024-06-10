@@ -25,6 +25,30 @@ class FighterService {
     }
     return fighters;
   }
+
+  getSpecific(id) {
+    const fighter = fighterRepository.getOne(id);
+    if (!fighter) {
+      return null;
+    }
+    return fighter;
+  }
+
+  update(id, fighterDto) {
+    const fighter = fighterRepository.update(id, fighterDto);
+    if (!fighter) {
+      return null;
+    }
+    return fighter;
+  }
+
+  delete(id) {
+    const fighter = fighterRepository.delete(id);
+    if (!fighter) {
+      return null;
+    }
+    return fighter;
+  }
 }
  
 const fighterService = new FighterService();
