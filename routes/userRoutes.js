@@ -9,5 +9,8 @@ import { responseMiddleware } from "../middlewares/response.middleware.js";
 const router = Router();
 
 // TODO: Implement route controllers for user
+router.post('/', createUserValid, (req, res, next) => {
+  console.log('data is valid');
+})
 
 export { router };
