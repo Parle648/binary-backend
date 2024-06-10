@@ -6,23 +6,22 @@ const router = Router();
 
 router.post(
   "/login",
-  (req, res, next) => {
+  async (req, res, next) => {
     try {
-      // TODO: Implement login action (get the user if it exist with entered credentials)
-      const isExist = authService.login(req.body);
-      if (isExist !== undefined) {
+      const data = await authService.login(req.body);
+
+      if (data) {
         res.data = {
           status: 200,
           data: true
         };
-      } else {
-        res.data = {
-          status: 404,
-          message: 'User not found'
-        }
-      }
+      } 
     } catch (err) {
-      res.err = err;
+      res.data = {
+        status: 500,
+        message: "User not found",
+        error: err.message
+      };
     } finally {
       next();
     }
