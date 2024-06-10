@@ -19,6 +19,10 @@ class BaseRepository {
     return this.dbContext.find(search).value();
   }
 
+  getUserByEmail(email) {
+    return this.dbContext.some(email);
+  }
+
   create(data) {
     data.id = this.generateId();
     data.createdAt = new Date();
