@@ -29,6 +29,12 @@ class UserService {
     const users = userRepository.getAll();
     return users ? users : null
   }
+
+  getSpecific(id) {
+    const user = userRepository.getOne({id});
+
+    return user ? user : null;
+  }
 }
 
 const userService = new UserService();

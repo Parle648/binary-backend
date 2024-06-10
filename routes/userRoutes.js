@@ -43,8 +43,37 @@ router.get('/', (req, res, next) => {
     }
   } catch (error) {
     res.data = {
-      status: 400,
+      status: 500,
       message: 'Cannot get users',
+      error: true
+    }
+  }
+  finally {
+    next()
+  }
+
+}, responseMiddleware)
+
+router.get('/:id', (req, res, next) => {
+  try {
+    const user = userService.getSpecific(req.params.id);
+
+    if (user) {
+      res.data = {
+        status: 200,
+        data: user
+      }
+    } else {
+      res.data = {
+        status: 404,
+        message: 'user does not exist',
+        error: true
+      }
+    }
+  } catch (error) {
+    res.data = {
+      status: 500,
+      message: 'Cannot get user',
       error: true
     }
   }
