@@ -9,7 +9,18 @@ router.post(
   (req, res, next) => {
     try {
       // TODO: Implement login action (get the user if it exist with entered credentials)
-      res.data = data;
+      const isExist = authService.login(req.body);
+      if (isExist !== undefined) {
+        res.data = {
+          status: 200,
+          data: true
+        };
+      } else {
+        res.data = {
+          status: 404,
+          message: 'User not found'
+        }
+      }
     } catch (err) {
       res.err = err;
     } finally {
